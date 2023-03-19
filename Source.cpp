@@ -20,12 +20,15 @@ public:
         for (int i = 0; i < s.size(); i++)
         {
             if (s[i] == '[' || s[i] == '(' || s[i] == '{')
+            {
                 tack.push(s[i]);
-            if (s[i] == ']' || s[i] == ')' || s[i] == '}')
+            }
+            
+            else if ((s[i] == ']' || s[i] == ')' || s[i] == '}')&& !tack.empty())
             {
                 char current = tack.top();
-                if (current != voc[s[i]])
-                    return false;
+                if (voc[current] == s[i])
+                    tack.pop();
             }
         }
         if (tack.empty())
@@ -39,7 +42,7 @@ public:
 
 int main()
 {
-    string input = "()[]{}";
+    string input = "(])";
     cout << Solution::isValid(input) << endl;
     return 0;
    
