@@ -5,6 +5,7 @@ using namespace std;
 
 class Solution {
 public:
+    static void print(stack<char>);
     static bool isValid(string s) {
 
 
@@ -22,13 +23,21 @@ public:
             if (s[i] == '[' || s[i] == '(' || s[i] == '{')
             {
                 tack.push(s[i]);
+                
+                
             }
-            
-            else if ((s[i] == ']' || s[i] == ')' || s[i] == '}')&& !tack.empty())
+        
+            if ((s[i] == ']' || s[i] == ')' || s[i] == '}')&& !tack.empty())
             {
                 char current = tack.top();
-                if (voc[current] == s[i])
+
+                if (voc[current] != s[i])
+                {
+                    i++;
+                }
+                else
                     tack.pop();
+                    
             }
         }
         if (tack.empty())
@@ -37,12 +46,19 @@ public:
             return false;
     }
 };
+void Solution::print(stack<char> tt)
+{
+    for (int i = 0; i < tt.size(); i++)
+    {
+        cout << tt.top() << endl;
+    }
+}
 
 
 
 int main()
 {
-    string input = "(])";
+    string input = "(}{)";
     cout << Solution::isValid(input) << endl;
     return 0;
    
