@@ -5,11 +5,10 @@ using namespace std;
 
 class Solution {
 public:
-    static void print(stack<char>);
     static bool isValid(string s) {
 
 
-        if (s[0] == ']' || s[0] == '}' || s[0] == ')'||s.size() == 1)
+        if (s[0] == ']' || s[0] == '}' || s[0] == ')' || s.size() == 1)
             return false;
 
         map<char, char> voc;
@@ -23,21 +22,24 @@ public:
             if (s[i] == '[' || s[i] == '(' || s[i] == '{')
             {
                 tack.push(s[i]);
-                
-                
-            }
-        
-            if ((s[i] == ']' || s[i] == ')' || s[i] == '}')&& !tack.empty())
-            {
-                char current = tack.top();
 
-                if (voc[current] != s[i])
+
+            }
+
+            if (s[i] == ']' || s[i] == ')' || s[i] == '}')
+            {
+                if (!tack.empty())
                 {
-                    i++;
+                    char current = tack.top();
+                    if (voc[current] == s[i])
+                        tack.pop();
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
-                    tack.pop();
-                    
+                    return false;
             }
         }
         if (tack.empty())
@@ -46,19 +48,12 @@ public:
             return false;
     }
 };
-void Solution::print(stack<char> tt)
-{
-    for (int i = 0; i < tt.size(); i++)
-    {
-        cout << tt.top() << endl;
-    }
-}
 
 
 
 int main()
 {
-    string input = "(}{)";
+    string input = "[])";
     cout << Solution::isValid(input) << endl;
     return 0;
    
